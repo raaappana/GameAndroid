@@ -1,5 +1,6 @@
 package pe.pe.pe;
 
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.ByteBuffer;
@@ -9,6 +10,7 @@ import java.nio.FloatBuffer;
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
 
+import android.R;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -117,7 +119,16 @@ class GLES20TriangleRenderer implements GLSurfaceView.Renderer {
         GLES20.glTexParameteri(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_WRAP_T,
                 GLES20.GL_REPEAT);
 
-        InputStream is = mContext.getResources().openRawResource(R.raw.robot);
+        InputStream is = null;
+		try 
+		{
+			is = mContext.getAssets().open("robot.png");
+		} 
+		catch (IOException e1) 
+		{
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
         Bitmap bitmap;
         try 
         {

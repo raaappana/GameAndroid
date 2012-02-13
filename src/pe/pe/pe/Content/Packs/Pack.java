@@ -25,7 +25,6 @@ public class Pack
         int foratID = br.ReadInt32();
         if (foratID != formayid)
         {
-            errors += DateTime.Now.ToString() + ": not a pack;";
             br.Close();
             return;
         }

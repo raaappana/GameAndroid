@@ -3,13 +3,15 @@ import java.io.*;
 public class BinaryReader {
 	
 	DataInputStream mStream;
+	PositionInputStream mInnerStream;
 	
-	public BinaryReader(String _file)
+	public BinaryReader(String __file)
 	{
 		try 
 		{
-			mStream = new DataInputStream(new BufferedInputStream(
-					new FileInputStream(_file)));
+			FileInputStream sss = new FileInputStream(__file);
+			mInnerStream = new PositionInputStream(sss);
+			mStream = new DataInputStream(new BufferedInputStream(mInnerStream));
 		} 
 		catch (FileNotFoundException e) 
 		{
@@ -32,8 +34,21 @@ public class BinaryReader {
 	public byte[] ReadChars(int __count)
 	{
 		byte[] buffer = new byte[__count];
-		int a =	mStream.read(buffer);
+		try 
+		{
+			int a =	mStream.read(buffer);
+		} 
+		catch (IOException e) 
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return buffer;
+	}
+	
+	public long Length()
+	{
+		return mInnerStream.getPosition();
 	}
 	
 	public void Close()
